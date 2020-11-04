@@ -7,5 +7,21 @@
 </head>
 <body>
     <h1>Home Page</h1>
+    {% if request.user.is_authenticated %}
+        <form action="logout/" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="username" value="{{request.user.username}}">
+            <button type="submit">Logout</button>
+        </form>
+    {% else %}
+        <form action="login/" method="post">
+            {% csrf_token %}
+            <label for="username">Enter Username</label> <br>
+            <input type="text" name="username" id="" placeholder="username" required> <br>
+            <label for="password">Enter Password</label> <br>
+            <input type="password" name="password" id="" placeholder="password" required> <br>
+            <button type="submit">Login</button>
+        </form>
+    {% endif %}
 </body>
 </html>

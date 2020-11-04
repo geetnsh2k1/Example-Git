@@ -22,7 +22,9 @@ from django.conf import settings
 from home import views
 
 urlpatterns = [
-    path('', views.home),
+    path('', views.home, name='home'),
+    path('login/', views.handlelogin),
+    path('logout/', views.handlelogout),
     path('admin/', admin.site.urls),
 ]
 urlpatterns += staticfiles_urlpatterns()
