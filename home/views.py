@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, HttpResponse
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
-from home.models import Response, Product
+from home.models import Response, Product, Like
 
 # Create your views here.
 def home(request):
@@ -92,6 +92,8 @@ def handleaddproduct(request):
             if len(product) == 0:
                 product = Product.objects.create(name=name, price=price, category=category, description=description)
                 product.save()
+                like = Like.objects.create(product=product)
+                like.save()
             else:
                 print("product can't added as it already exists.")
         except Exception as e:
@@ -115,3 +117,30 @@ def handledeleteproduct(request):
     else:
         pass
     return redirect('home')
+
+def handlelikes(request):
+    try:
+        if request.method == "POST":
+            pname = request.POST['pname']
+            like = request.POST['like']
+            
+            username = request.user.username
+            product = Product.objects.get(name=pname)
+            user = User.objects.get(username=username)
+
+            if like == "Likes":
+                like = Like.objects.get(product=product)
+                like.user.add(user)
+                like.count += 1
+                like.save()
+            else:
+                print('unlike')
+                like = Like.objects.get(product=product, user=user)
+                like.user.remove(user)
+                like.count -= 1
+                like.save()
+        else:
+            pass
+    except Exception as e:
+        print(e)
+    return redirect('allproducts')

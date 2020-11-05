@@ -19,3 +19,12 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+    
+class Like(models.Model):
+    product = models.OneToOneField(Product, on_delete=models.CASCADE)
+    user = models.ManyToManyField(User, related_name='user', blank=True)
+    count = models.IntegerField(default=0)
+
+    def __str__(self):
+        string = str(self.product.name) + "-" + str(self.count)
+        return string

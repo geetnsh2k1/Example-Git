@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 {% load static %}
+{% load app_tags %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -14,6 +15,7 @@
                 <th>Price</th>
                 <th>Category</th>
                 <th>Description</th>
+                <th>Like</th>
             </tr>
             {% for product in products %}
                 <tr>
@@ -21,6 +23,14 @@
                     <td>{{product.price}}</td>
                     <td>{{product.category}}</td>
                     <td>{{product.description}}</td>
+                    <td>
+                        <form action="like/" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="pname" value="{{product.name}}">
+                            <input type="hidden" name="like" value="{% like product.name request.user %}">
+                            <button type="submit">{% counter product.name %} {% like product.name request.user %}</button>
+                        </form>
+                    </td>
                 </tr>
             {% endfor %}
         </table>
