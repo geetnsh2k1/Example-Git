@@ -25,6 +25,13 @@ urlpatterns = [
     path('', views.home, name='home'),
     path('login/', views.handlelogin),
     path('logout/', views.handlelogout),
+    path('signup/', views.handlesignup),
+    path('response/', views.handleresponse),
+    path('viewallproducts/', views.viewproducts),
+    path('addproduct/', views.addproduct),
+    path('addproduct/addproductform/', views.handleaddproduct),
+    path('deleteproduct/', views.deletepage),
+    path('deleteproduct/deleteproductform/', views.handledeleteproduct),
     path('admin/', admin.site.urls),
 ]
 urlpatterns += staticfiles_urlpatterns()

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete-Product</title>
+</head>
+<body>
+    {% if products %}
+        <table border="2px solid" cellpadding="15px" width="100%" style="text-align: center;border-collapse:collapse">
+            <tr>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Category</th>
+                <th>Description</th>
+                <th>Delete Button</th>
+            </tr>
+            {% for product in products %}
+                <tr>
+                    <td>{{product.name}}</td>
+                    <td>{{product.price}}</td>
+                    <td>{{product.category}}</td>
+                    <td>{{product.description}}</td>
+                    <td>
+                        <form action="deleteproductform/" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="pname" value="{{product.name}}">
+                            <button type="submit">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <h1>no products</h1>
+    {% endif %}
+</body>
+</html>
